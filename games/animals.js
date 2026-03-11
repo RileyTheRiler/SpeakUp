@@ -89,9 +89,13 @@ function processSpeech(cleanWords, rawTranscript) {
     }
 
     if (matched) {
-        ProgressionSystem.addStars(1);
+        ProgressionSystem.awardForGame('animals', 1);
         heardWordEl.style.color = 'var(--secondary)';
         setTimeout(() => { heardWordEl.style.color = 'var(--dark)'; }, 1000);
+    } else if (cleanWords.some(word => ['be', 'bare', 'line', 'dock'].includes(word))) {
+        if (typeof uiUtils !== 'undefined') {
+            uiUtils.notify('Close! Try the exact animal word or sound.', 'info');
+        }
     }
 }
 

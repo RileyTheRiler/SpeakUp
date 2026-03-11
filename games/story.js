@@ -2,28 +2,29 @@ const storyTemplates = [
     {
         parts: [
             { type: "subject", target: "dog", img: "../assets/dog.png" },
-            { type: "action", target: "eats", img: "../assets/apple.png" }, // Reusing an asset conceptually
-            { type: "object", target: "apple", img: "../assets/apple.png" }
+            { type: "action", target: "drives", img: "../assets/car_red.png" },
+            { type: "object", target: "car", img: "../assets/car_red.png" }
         ]
     },
     {
         parts: [
             { type: "subject", target: "bunny", img: "../assets/bunny.png" },
-            { type: "action", target: "paints", img: "../assets/brush.png" }, // Assuming a generic brush icon from fontawesome or similar
-            { type: "object", target: "canvas", img: "../assets/canvas.png" } // Or just abstract it 
+            { type: "action", target: "hops", img: "../assets/bunny.png" },
+            { type: "object", target: "tree", img: "../assets/tree_green.png" }
         ]
     },
     {
         parts: [
             { type: "subject", target: "lion", img: "../assets/lion.png" },
-            { type: "action", target: "drives", img: "../assets/racecar.png" },
-            { type: "object", target: "car", img: "../assets/racecar.png" }
+            { type: "action", target: "sees", img: "../assets/lion.png" },
+            { type: "object", target: "house", img: "../assets/house_blue.png" }
         ]
     }
 ];
 
 let currentStory = null;
 let currentPartIndex = 0;
+let missesForCurrentPart = 0;
 
 const storyParts = [
     { container: document.getElementById('part-1'), img: document.getElementById('img-1'), text: document.getElementById('text-1') },
@@ -39,6 +40,7 @@ const fullSentenceEl = document.getElementById('full-sentence');
 function initStory() {
     currentStory = storyTemplates[Math.floor(Math.random() * storyTemplates.length)];
     currentPartIndex = 0;
+    missesForCurrentPart = 0;
 
     // Reset UI
     storyParts.forEach((part, index) => {
@@ -90,8 +92,11 @@ function processSpeech(cleanWords, transcript) {
 
         // Since we are reusing assets, fallback to text if image isn't perfect for the action, 
         // but try to load it anyway. 
-        uiPart.img.src = targetData.img;
-        uiPart.img.onerror = () => { uiPart.img.style.display = 'none'; }; // Hide broken images dynamically
+        if (targetData.img) {
+            uiPart.img.src = targetData.img;
+            uiPart.img.style.display = 'block';
+            uiPart.img.onerror = () => { uiPart.img.style.display = 'none'; };
+        }
 
         uiPart.text.textContent = targetData.target;
 
@@ -101,7 +106,7 @@ function processSpeech(cleanWords, transcript) {
 
         if (currentPartIndex >= storyParts.length) {
             // Story complete!
-            ProgressionSystem.addStars(4); // Big reward for a phrase
+            ProgressionSystem.awardForGame('story', 4); // Big reward for a phrase
             audioUtils.playDing();
 
             const sentence = currentStory.parts.map(p => p.target).join(" ");
@@ -109,15 +114,26 @@ function processSpeech(cleanWords, transcript) {
             uiUtils.triggerAnimation(fullSentenceEl, 'anim-stretch', 1000);
             wordOptionsEl.innerHTML = "<span class='option-badge' style='background: var(--primary); color: white;'>Story Complete!</span>";
         } else {
+            missesForCurrentPart = 0;
             updateTargetHints();
         }
     } else {
+        missesForCurrentPart++;
+        if (missesForCurrentPart >= 2 && typeof uiUtils !== 'undefined') {
+            uiUtils.notify(`Hint: say "${targetData.target}"`, 'info');
+        }
         audioUtils.playBoing();
         uiUtils.triggerAnimation(storyParts[currentPartIndex].container, 'anim-shake', 500);
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof SpeechTargets !== 'undefined') {
+        storyTemplates.forEach(template => {
+            template.parts = SpeechTargets.resolveForGame(template.parts);
+        });
+    }
+
     GameController.init(processSpeech);
     nextBtn.addEventListener('click', initStory);
     initStory();

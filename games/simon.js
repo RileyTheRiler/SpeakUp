@@ -12,6 +12,8 @@ const instructions = [
 ];
 
 let currentInstruction = null;
+let hintLevel = 0;
+let instructionPool = [...instructions];
 
 const simonInstructionEl = document.getElementById('simon-instruction');
 const targetWordEl = document.getElementById('target-word');
@@ -22,7 +24,7 @@ function pickNewInstruction() {
     // Pick a random instruction that isn't the current one
     let newInstruction;
     do {
-        newInstruction = instructions[Math.floor(Math.random() * instructions.length)];
+        newInstruction = instructionPool[Math.floor(Math.random() * instructionPool.length)];
     } while (currentInstruction && newInstruction.text === currentInstruction.text);
 
     currentInstruction = newInstruction;
@@ -31,6 +33,7 @@ function pickNewInstruction() {
     simonInstructionEl.textContent = currentInstruction.text;
     targetWordEl.textContent = currentInstruction.target;
     heardWordEl.textContent = "...";
+    hintLevel = 0;
 
     // Animate
     uiUtils.triggerAnimation(simonInstructionEl, 'anim-stretch', 500);
@@ -47,14 +50,21 @@ function processSpeech(cleanWords, transcript) {
     // The logic here: we are practicing receptive language. The app says "Simon says touch your nose,"
     // the child touches their nose, and to register success, they must say the target keyword aloud.
 
-    const isCorrect = cleanWords.includes(currentInstruction.target.toLowerCase());
+    const synonymMap = {
+        toes: ['toe'],
+        clap: ['clapping'],
+        jump: ['jumping'],
+        wave: ['waving']
+    };
+    const expectedWords = [currentInstruction.target.toLowerCase(), ...(synonymMap[currentInstruction.target] || [])];
+    const isCorrect = cleanWords.some(word => expectedWords.includes(word));
 
     if (typeof SessionData !== 'undefined') {
         SessionData.logAttempt('simon', currentInstruction.target.toLowerCase(), transcript, isCorrect);
     }
 
     if (isCorrect) {
-        ProgressionSystem.addStars(2); // Bonus stars for following directions
+        ProgressionSystem.awardForGame('simon', 2); // Bonus stars for following directions
         audioUtils.playDing();
         uiUtils.triggerAnimation(simonInstructionEl, 'anim-hop', 600);
 
@@ -69,6 +79,12 @@ function processSpeech(cleanWords, transcript) {
             pickNewInstruction();
         }, 2000);
     } else {
+        hintLevel++;
+        if (hintLevel === 1) {
+            heardWordEl.textContent = `Try saying: ${currentInstruction.target}`;
+        } else if (hintLevel >= 2) {
+            simonInstructionEl.textContent = `${currentInstruction.text} (Hint: ${currentInstruction.target.toUpperCase()})`;
+        }
         audioUtils.playBoing();
         uiUtils.triggerAnimation(simonInstructionEl, 'anim-shake', 500);
     }
@@ -76,6 +92,11 @@ function processSpeech(cleanWords, transcript) {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof SpeechTargets !== 'undefined') {
+        instructionPool = SpeechTargets.resolveForGame(instructions)
+            .sort((a, b) => (a.priority === 'high' ? -1 : 1));
+    }
+
     GameController.init(processSpeech);
 
     nextBtn.addEventListener('click', pickNewInstruction);

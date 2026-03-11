@@ -9,12 +9,14 @@ let audioContext = null;
 let analyser = null;
 let dataArray = null;
 let source = null;
+let streamRef = null;
 let animationId = null;
 let carPosition = 20;
 
 async function startEngine() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        streamRef = stream;
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
         analyser.fftSize = 256;
@@ -28,7 +30,9 @@ async function startEngine() {
 
         driveLoop();
     } catch (err) {
-        alert("Microphone access denied or error occurred: " + err);
+        if (typeof uiUtils !== 'undefined') {
+            uiUtils.notify('Microphone access denied or unavailable. Check browser permissions and retry.', 'warning');
+        }
         micStatus.textContent = "Start Engine";
         micBtn.classList.remove('listening');
     }
@@ -40,6 +44,10 @@ function stopEngine() {
     if (audioContext) {
         audioContext.close();
         audioContext = null;
+    }
+    if (streamRef) {
+        streamRef.getTracks().forEach(track => track.stop());
+        streamRef = null;
     }
     micStatus.textContent = "Start Engine";
     micBtn.classList.remove('listening');
@@ -73,24 +81,14 @@ function driveLoop() {
         if (carPosition > trackWidth - 100) {
             carPosition = trackWidth - 100;
             if (isDriving) {
-                // play cheering sound or ding
-                // Since we didn't include utils.js to avoid mic conflicts, we do inline ding
-                const context = new (window.AudioContext || window.webkitAudioContext)();
-                if (context.state === 'suspended') context.resume();
-                const osc = context.createOscillator();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, context.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1200, context.currentTime + 0.1);
-                osc.connect(context.destination);
-                osc.start();
-                osc.stop(context.currentTime + 0.3);
+                audioUtils.playDing();
 
                 stopEngine();
                 micStatus.textContent = "Finished!";
 
                 // Add a star for finishing the race
                 if (typeof ProgressionSystem !== 'undefined') {
-                    ProgressionSystem.addStars(1);
+                    ProgressionSystem.awardForGame('race', 1);
                 }
             }
         }
@@ -118,7 +116,6 @@ resetBtn.addEventListener('click', () => {
     }
 });
 
-// Since race.html doesn't use utils.js natively for recognition, we inject the Progression tracker manually
 if (typeof ProgressionSystem !== 'undefined') {
     ProgressionSystem.injectUI();
 }
