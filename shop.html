@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Rewards Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .shop-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .shop-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .shop-item.owned {
+            border-color: #2ed573;
+            background: rgba(46, 213, 115, 0.1);
+        }
+
+        .shop-item i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .shop-item h3 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-tag {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .buy-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .buy-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .buy-btn.apply-btn {
+            background: #2ed573;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Let's Play</a>
+            <h1>Rewards Shop 🛍️</h1>
+            <p>Spend your hard-earned stars on cool themes!</p>
+        </header>
+
+        <main class="shop-grid" id="shop-container">
+            <!-- Items injected by JS -->
+        </main>
+    </div>
+
+    <!-- Need utils.js so we can access ProgressionSystem -->
+    <script src="utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure Star Bank initializes on the shop page
+            ProgressionSystem.injectUI();
+        });
+    </script>
+    <script src="shop.js"></script>
+</body>
+
+</html>

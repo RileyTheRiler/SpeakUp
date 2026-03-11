@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Simon Says</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Simon Says 🗣️</h1>
+            <p>Listen, repeat, and follow the directions!</p>
+        </header>
+
+        <main class="game-area">
+            <div class="simon-stage" style="text-align: center; margin-bottom: 2rem;">
+                <div id="simon-instruction"
+                    style="font-size: 2.5rem; font-family: 'Fredoka One', cursive; color: var(--primary); min-height: 80px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.7); border-radius: 20px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                    Tap 'Next Instruction' to start!
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-microphone"></i>
+                    <span id="mic-status">Tap to Answer</span>
+                </button>
+                <button id="next-btn" class="btn-reset">
+                    <i class="fa-solid fa-forward"></i> Next Instruction
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>Did I hear '<span id="target-word"
+                        style="color: var(--secondary); font-weight: 800; text-transform: uppercase;">...</span>'? <br>
+                    <small>I heard: <span id="heard-word">...</span></small>
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="simon.js"></script>
+</body>
+
+</html>

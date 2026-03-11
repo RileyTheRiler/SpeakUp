@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Speech Therapy Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Speak Up! 🎙️</h1>
+            <p>Choose an adventure to practice your magic words!</p>
+        </header>
+
+        <div class="menu-grid">
+            <a href="games/animals" class="game-card">
+                <i class="fa-solid fa-paw"></i>
+                <h3>Animal Sounds</h3>
+                <small>Animals & Actions</small>
+            </a>
+
+            <a href="games/coloring" class="game-card">
+                <i class="fa-solid fa-palette"></i>
+                <h3>Magic Colors</h3>
+                <small>Colors & Words</small>
+            </a>
+
+            <a href="games/faces" class="game-card">
+                <i class="fa-solid fa-face-smile"></i>
+                <h3>Feelings</h3>
+                <small>Social/Emotions</small>
+            </a>
+
+            <a href="games/feeding" class="game-card">
+                <i class="fa-solid fa-apple-whole"></i>
+                <h3>Feeding Time</h3>
+                <small>Categorization</small>
+            </a>
+
+            <a href="games/orchestra" class="game-card">
+                <i class="fa-solid fa-drum"></i>
+                <h3>Orchestra</h3>
+                <small>Environment Sounds</small>
+            </a>
+
+            <a href="games/hide" class="game-card">
+                <i class="fa-solid fa-box-open"></i>
+                <h3>Hide & Seek</h3>
+                <small>Prepositions</small>
+            </a>
+
+            <a href="games/race" class="game-card">
+                <i class="fa-solid fa-car-side"></i>
+                <h3>Loud Race</h3>
+                <small>Volume & Phonation</small>
+            </a>
+
+            <a href="games/simon" class="game-card">
+                <i class="fa-solid fa-ear-listen"></i>
+                <h3>Simon Says</h3>
+                <small>Following Directions</small>
+            </a>
+
+            <a href="games/story" class="game-card">
+                <i class="fa-solid fa-book-open"></i>
+                <h3>Story Builder</h3>
+                <small>Sentences</small>
+            </a>
+
+            <a href="shop" class="game-card">
+                <i class="fa-solid fa-store"></i>
+                <h3>Rewards Shop</h3>
+                <small>Spend Stars</small>
+            </a>
+
+            <a href="settings" class="game-card"
+                style="grid-column: 1 / -1; max-width: 400px; margin: 0 auto; min-height: 150px; padding: 2rem;">
+                <i class="fa-solid fa-gear" style="font-size: 2.5rem;"></i>
+                <h3 style="font-size: 1.4rem;">Parent Settings</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- Import utils for the Global Star Bank display -->
+    <script src="utils.js"></script>
+    <script>
+        // Ensure Star Bank initializes on the home page
+        document.addEventListener('DOMContentLoaded', () => {
+            ProgressionSystem.injectUI();
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('SW registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>

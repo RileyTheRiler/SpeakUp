@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Silly Orchestra</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Silly Orchestra 🥁</h1>
+            <p>Say the instrument or its sound! ("Drum" / "Bang", "Bell" / "Ding")</p>
+        </header>
+
+        <main class="game-area">
+            <div class="instrument-grid">
+                <div class="instrument-container">
+                    <i class="fa-solid fa-drum instrument" id="inst-drum" style="color: #ff6b6b;"></i>
+                    <span>Drum / Bang</span>
+                </div>
+                <div class="instrument-container">
+                    <i class="fa-solid fa-bell instrument" id="inst-bell" style="color: #fca311;"></i>
+                    <span>Bell / Ding</span>
+                </div>
+                <div class="instrument-container">
+                    <i class="fa-solid fa-guitar instrument" id="inst-guitar" style="color: #4ecdc4;"></i>
+                    <span>Guitar / Strum</span>
+                </div>
+                <div class="instrument-container">
+                    <i class="fa-solid fa-trumpet instrument" id="inst-trumpet" style="color: #f1c40f;"></i>
+                    <span>Trumpet / Toot</span>
+                </div>
+                <div class="instrument-container">
+                    <i class="fa-solid fa-keyboard instrument" id="inst-keyboard" style="color: #9b59b6;"></i>
+                    <span>Keyboard / Play</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-music"></i>
+                    <span id="mic-status">Tap to Conduct</span>
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>Heard: <span id="heard-word">...</span></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="orchestra.js"></script>
+</body>
+
+</html>

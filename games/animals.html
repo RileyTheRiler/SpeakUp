@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Animal Sounds</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Animal Sounds 🐾</h1>
+            <p>Select a friend and say their magic words!</p>
+        </header>
+
+        <div class="character-selection">
+            <button class="char-btn active" data-char="bee">
+                <img src="../assets/bee.png" alt="Bee">
+                <span>The Bee</span>
+                <small>Words: "bee", "buzz"</small>
+            </button>
+            <button class="char-btn" data-char="bunny">
+                <img src="../assets/bunny.png" alt="Bunny">
+                <span>The Bunny</span>
+                <small>Words: "bunny", "hop"</small>
+            </button>
+            <button class="char-btn" data-char="snake">
+                <img src="../assets/snake.png" alt="Snake">
+                <span>The Snake</span>
+                <small>Words: "snake", "hiss"</small>
+            </button>
+            <button class="char-btn" data-char="lion">
+                <img src="../assets/lion.png" alt="Lion">
+                <span>The Lion</span>
+                <small>Words: "lion", "roar"</small>
+            </button>
+            <button class="char-btn" data-char="kitten">
+                <img src="../assets/kitten.png" alt="Kitten">
+                <span>The Kitten</span>
+                <small>Words: "meow", "purr"</small>
+            </button>
+            <button class="char-btn" data-char="dog">
+                <img src="../assets/dog.png" alt="Dog">
+                <span>The Dog</span>
+                <small>Words: "bark", "run"</small>
+            </button>
+        </div>
+
+        <main class="game-area">
+            <div class="character-stage">
+                <img id="active-character" src="../assets/bee.png" alt="Active Character">
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-microphone"></i>
+                    <span id="mic-status">Tap to Start Listening</span>
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>I heard: <span id="heard-word">...</span></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="animals.js"></script>
+</body>
+
+</html>

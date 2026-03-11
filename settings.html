@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .settings-container {
+            text-align: left;
+            margin: 2rem auto;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        .setting-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 2px dashed rgba(0, 0, 0, 0.1);
+        }
+
+        .setting-group:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .setting-info p {
+            color: #4A4A5A;
+            font-size: 1.1rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--secondary);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        .btn-danger {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-danger:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to the Fun</a>
+            <h1>Parent Settings ⚙️</h1>
+            <p>Adjust the experience for your child.</p>
+        </header>
+
+        <main class="settings-container">
+            <div class="setting-group" style="flex-direction: column; align-items: flex-start;">
+                <div class="setting-info"
+                    style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div>
+                        <h3>Clinical Dashboard</h3>
+                        <p>Track practice attempts and accuracy across all games.</p>
+                    </div>
+                    <button class="btn-primary" id="export-csv-btn"
+                        style="padding: 0.5rem 1rem; border-radius: 20px; border: none; background: var(--primary); color: white; font-family: 'Fredoka One'; cursor: pointer;">Export
+                        CSV</button>
+                </div>
+                <div style="display: flex; gap: 1rem; width: 100%;">
+                    <div
+                        style="flex: 1; background: white; padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid var(--primary);">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="dashboard-attempts">
+                            0</div>
+                        <div style="color: #4A4A5A; font-weight: bold;">Attempts</div>
+                    </div>
+                    <div
+                        style="flex: 1; background: white; padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid var(--secondary);">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);"
+                            id="dashboard-successes">0</div>
+                        <div style="color: #4A4A5A; font-weight: bold;">Successes</div>
+                    </div>
+                    <div
+                        style="flex: 1; background: white; padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid var(--accent);">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--accent);" id="dashboard-accuracy">
+                            0%</div>
+                        <div style="color: #4A4A5A; font-weight: bold;">Accuracy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-group" style="flex-direction: column; align-items: flex-start;">
+                <div class="setting-info" style="margin-bottom: 1rem;">
+                    <h3>Speech Targets</h3>
+                    <p>Select which word categories the child should practice. Overrides default game words.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem; cursor: pointer;">
+                        <input type="checkbox" class="target-checkbox" value="core" style="width: 20px; height: 20px;">
+                        Core Words (go, stop, more, help, yes, no)
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem; cursor: pointer;">
+                        <input type="checkbox" class="target-checkbox" value="bilabials"
+                            style="width: 20px; height: 20px;"> Bilabials (p, b, m)
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem; cursor: pointer;">
+                        <input type="checkbox" class="target-checkbox" value="early_sounds"
+                            style="width: 20px; height: 20px;"> Early Sounds (t, d, n)
+                    </label>
+                    <small style="color: #666; margin-top: 0.5rem; display: block;">Note: If nothing is selected, the
+                        app will use default play words.</small>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <div class="setting-info">
+                    <h3>Sound Effects</h3>
+                    <p>Toggle game sounds for sensory needs.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sound-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-group">
+                <div class="setting-info">
+                    <h3>Reset Progress</h3>
+                    <p>Erase all Stars to start fresh.</p>
+                </div>
+                <button class="btn-danger" id="reset-stars-btn">Reset Stars</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Need utils.js so we can access ProgressionSystem if needed -->
+    <script src="utils.js"></script>
+    <script src="settings.js"></script>
+</body>
+
+</html>

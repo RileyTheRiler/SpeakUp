@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Hide & Seek</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Hide & Seek 🐭</h1>
+            <p>Where is the mouse hiding? Say "Behind the Tree" or "On the Bed"!</p>
+        </header>
+
+        <main class="game-area">
+            <div class="scene" id="scene">
+                <i class="fa-solid fa-computer-mouse" id="mouse"></i>
+
+                <div class="furniture-group" id="grp-box">
+                    <i class="fa-solid fa-box-open prop" style="color: #fca311;"></i>
+                    <span class="prop-label">Box</span>
+                </div>
+
+                <div class="furniture-group" id="grp-tree">
+                    <i class="fa-solid fa-tree prop" style="color: #4ecdc4;"></i>
+                    <span class="prop-label">Tree</span>
+                </div>
+
+                <div class="furniture-group" id="grp-bed">
+                    <i class="fa-solid fa-bed prop" style="color: #ff9a9e;"></i>
+                    <span class="prop-label">Bed</span>
+                </div>
+
+                <div class="furniture-group" id="grp-couch">
+                    <i class="fa-solid fa-couch prop" style="color: #9b59b6;"></i>
+                    <span class="prop-label">Couch</span>
+                </div>
+
+                <div class="furniture-group" id="grp-chair">
+                    <i class="fa-solid fa-chair prop" style="color: #e67e22;"></i>
+                    <span class="prop-label">Chair</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span id="mic-status">Tap to Guess</span>
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>Guess: <span id="heard-word">...</span></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="hide.js"></script>
+</body>
+
+</html>

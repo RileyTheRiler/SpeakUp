@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Feeding Time</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Feeding Time 🍏</h1>
+            <p>The monster is hungry! Feed him by saying "Apple", "Lemon", "Cookie", or "Carrot".</p>
+        </header>
+
+        <main class="game-area">
+            <div class="stage-container" id="stage">
+                <i class="fa-solid fa-dragon monster" id="monster"></i>
+                <i class="fa-solid fa-apple-whole food-item" id="food-apple"></i>
+                <i class="fa-solid fa-lemon food-item" id="food-lemon"></i>
+                <i class="fa-solid fa-cookie food-item" id="food-cookie"></i>
+                <i class="fa-solid fa-carrot food-item" id="food-carrot"></i>
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span id="mic-status">Tap to Feed</span>
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>Heard: <span id="heard-word">...</span></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="feeding.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Loud Race</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Loud Race 🏎️</h1>
+            <p>Make a long "Vrrrr" or "Ahhh" sound to drive the car!</p>
+        </header>
+
+        <main class="game-area">
+            <div class="track" id="track">
+                <div class="finish-line"></div>
+                <i class="fa-solid fa-car-side" id="car"></i>
+            </div>
+
+            <div class="speedometer">
+                Volume Power
+                <div id="volume-bar">
+                    <div id="volume-fill"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-play"></i>
+                    <span id="mic-status">Start Engine</span>
+                </button>
+                <button class="ready btn-reset" id="reset-btn">
+                    <i class="fa-solid fa-rotate-right"></i> Reset
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="race.js"></script>
+</body>
+
+</html>

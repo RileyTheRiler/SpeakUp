@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Magic Colors</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Magic Colors 🎨</h1>
+            <p>Say the color and the picture to paint it! (e.g. "Red Car")</p>
+        </header>
+
+        <div class="character-selection">
+            <button class="char-btn active" data-img="house">
+                <i class="fa-solid fa-house char-btn-icon"></i>
+                <span>House</span>
+                <small>Words: "blue house"</small>
+            </button>
+            <button class="char-btn" data-img="car">
+                <i class="fa-solid fa-car char-btn-icon"></i>
+                <span>Car</span>
+                <small>Words: "red car"</small>
+            </button>
+            <button class="char-btn" data-img="tree">
+                <i class="fa-solid fa-tree char-btn-icon"></i>
+                <span>Tree</span>
+                <small>Words: "green tree"</small>
+            </button>
+        </div>
+
+        <main class="game-area">
+            <div class="character-stage character-stage-coloring">
+                <img id="coloring-canvas" class="coloring-canvas" src="../assets/house_outline.png" alt="Outline">
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span id="mic-status">Tap to Chant Magic</span>
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>Magic heard: <span id="heard-word">...</span></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="coloring.js"></script>
+</body>
+
+</html>

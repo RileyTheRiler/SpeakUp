@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak Up - Story Builder</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .story-builder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+            min-height: 200px;
+        }
+
+        .story-part {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px dashed #a4b0be;
+            border-radius: 20px;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-family: 'Fredoka One', cursive;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .story-part.filled {
+            border-style: solid;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .story-part img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .story-part.filled img {
+            display: block;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+
+            80% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .word-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            min-height: 80px;
+        }
+
+        .option-badge {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+            color: var(--dark);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .option-badge.target {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Games</a>
+            <h1>Story Builder 📖</h1>
+            <p>Say the words to build a silly sentence!</p>
+        </header>
+
+        <main class="game-area">
+            <div class="story-builder">
+                <div class="story-part" id="part-1">
+                    <img id="img-1" src="" alt="Subject">
+                    <span id="text-1">Who?</span>
+                </div>
+                <div style="font-size: 2rem; color: var(--primary);"><i class="fa-solid fa-plus"></i></div>
+                <div class="story-part" id="part-2">
+                    <img id="img-2" src="" alt="Action">
+                    <span id="text-2">Doing What?</span>
+                </div>
+                <div style="font-size: 2rem; color: var(--primary);"><i class="fa-solid fa-plus"></i></div>
+                <div class="story-part" id="part-3">
+                    <img id="img-3" src="" alt="Object">
+                    <span id="text-3">To What?</span>
+                </div>
+            </div>
+
+            <div class="word-options" id="word-options">
+                <!-- Word hints injected here -->
+            </div>
+
+            <div class="controls">
+                <button id="mic-btn" class="ready">
+                    <i class="fa-solid fa-microphone"></i>
+                    <span id="mic-status">Tap to Build</span>
+                </button>
+                <button id="next-btn" class="btn-reset">
+                    <i class="fa-solid fa-rotate-right"></i> New Story
+                </button>
+            </div>
+
+            <div class="recognition-feedback">
+                <p>I heard: <span id="heard-word">...</span></p>
+                <div id="full-sentence"
+                    style="margin-top: 15px; font-size: 2rem; font-family: 'Fredoka One', cursive; color: var(--accent); min-height: 40px;">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../utils.js"></script>
+    <script src="story.js"></script>
+</body>
+
+</html>
