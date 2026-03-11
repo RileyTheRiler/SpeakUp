@@ -35,7 +35,7 @@ function processSpeech(cleanWords, rawTranscript) {
     }
 
     if (fed) {
-        ProgressionSystem.addStars(1);
+        ProgressionSystem.awardForGame('feeding', 1);
         heardWordEl.style.color = 'var(--primary)';
         setTimeout(() => { heardWordEl.style.color = 'var(--dark)'; }, 1000);
     }

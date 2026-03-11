@@ -228,7 +228,7 @@ const speechUtils = {
         const recognition = new SpeechRecognition();
         recognition.continuous = false;
         recognition.interimResults = false;
-        recognition.lang = 'en-US';
+        recognition.lang = localStorage.getItem('speakup_recognition_lang') || 'en-US';
 
         if (onStartCallback) recognition.onstart = onStartCallback;
         if (onEndCallback) recognition.onend = onEndCallback;
@@ -261,6 +261,23 @@ const uiUtils = {
     applyThemeToDocument: () => {
         const theme = localStorage.getItem('speakup_active_theme') || 'default';
         document.body.className = theme === 'default' ? '' : theme;
+    },
+
+    notify: (message, variant = 'info') => {
+        const existing = document.getElementById('speakup-toast');
+        if (existing) existing.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'speakup-toast';
+        toast.className = `speakup-toast speakup-toast--${variant}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('visible'), 10);
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 250);
+        }, 3000);
     }
 };
 
@@ -293,6 +310,18 @@ const SpeechTargets = {
 
     setActiveTargets: (targetArray) => {
         localStorage.setItem('speakup_targets', JSON.stringify(targetArray));
+    },
+
+    resolveForGame: (gameDefaults) => {
+        const active = SpeechTargets.getActiveTargets();
+        if (!Array.isArray(active) || active.length === 0) return gameDefaults;
+        return gameDefaults.map(item => {
+            if (!item || typeof item === 'string') return item;
+            if (item.target && active.includes(item.target)) {
+                return { ...item, priority: 'high' };
+            }
+            return item;
+        });
     }
 };
 
@@ -356,6 +385,33 @@ const ProgressionSystem = {
         if (amount > 0) {
             audioUtils.playDing();
         }
+    },
+
+    awardForGame: (gameKey, baseAmount = 1) => {
+        const now = Date.now();
+        let state = {};
+        try {
+            state = JSON.parse(localStorage.getItem('speakup_reward_state') || '{}');
+        } catch (e) { }
+
+        const gameState = state[gameKey] || { streak: 0, lastWinTs: 0 };
+        const rapidRepeat = now - gameState.lastWinTs < 10000;
+        gameState.streak = rapidRepeat ? gameState.streak + 1 : 1;
+        gameState.lastWinTs = now;
+
+        let finalAmount = baseAmount;
+        if (gameState.streak >= 5) {
+            finalAmount = 0;
+            uiUtils.notify('Keep going! More stars unlock after a short break.', 'info');
+        } else if (gameState.streak >= 3) {
+            finalAmount = Math.max(1, Math.floor(baseAmount / 2));
+        }
+
+        state[gameKey] = gameState;
+        localStorage.setItem('speakup_reward_state', JSON.stringify(state));
+
+        if (finalAmount > 0) ProgressionSystem.addStars(finalAmount);
+        return finalAmount;
     },
 
     updateUI: () => {
@@ -431,7 +487,7 @@ const GameController = {
                         GameController.isListening = false;
                         if (micStatus) micStatus.textContent = "Tap to Start";
                         if (micBtn) micBtn.classList.remove('listening');
-                        alert("Microphone access was denied.");
+                        uiUtils.notify("Microphone access was denied. Enable mic permission in browser settings.", 'warning');
                     }
                 }
             );
@@ -474,6 +530,34 @@ const GameController = {
             z-index: 100;
         }
         header { position: relative; } /* Ensure header can contain absolute stars */
+
+        .speakup-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(26, 26, 36, 0.95);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            font-weight: 700;
+        }
+
+        .speakup-toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .speakup-toast--warning {
+            background: rgba(255, 71, 87, 0.95);
+        }
+
+        .speakup-toast--success {
+            background: rgba(46, 213, 115, 0.95);
+        }
     `;
     document.head.appendChild(style);
 })();

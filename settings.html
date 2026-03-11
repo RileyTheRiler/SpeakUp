@@ -115,35 +115,35 @@
         </header>
 
         <main class="settings-container">
-            <div class="setting-group" style="flex-direction: column; align-items: flex-start;">
-                <div class="setting-info"
-                    style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div class="setting-group setting-group-stack">
+                <div class="setting-info setting-header-row">
                     <div>
                         <h3>Clinical Dashboard</h3>
                         <p>Track practice attempts and accuracy across all games.</p>
                     </div>
-                    <button class="btn-primary" id="export-csv-btn"
-                        style="padding: 0.5rem 1rem; border-radius: 20px; border: none; background: var(--primary); color: white; font-family: 'Fredoka One'; cursor: pointer;">Export
+                    <button class="btn-primary export-csv-btn" id="export-csv-btn">Export
                         CSV</button>
                 </div>
-                <div style="display: flex; gap: 1rem; width: 100%;">
-                    <div
-                        style="flex: 1; background: white; padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid var(--primary);">
-                        <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="dashboard-attempts">
-                            0</div>
-                        <div style="color: #4A4A5A; font-weight: bold;">Attempts</div>
+                <div class="settings-metrics-grid">
+                    <div class="settings-metric-card metric-primary">
+                        <div class="settings-metric-value metric-value-primary" id="dashboard-attempts">0</div>
+                        <div class="settings-metric-label">Attempts</div>
                     </div>
-                    <div
-                        style="flex: 1; background: white; padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid var(--secondary);">
-                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);"
-                            id="dashboard-successes">0</div>
-                        <div style="color: #4A4A5A; font-weight: bold;">Successes</div>
+                    <div class="settings-metric-card metric-secondary">
+                        <div class="settings-metric-value metric-value-secondary" id="dashboard-successes">0</div>
+                        <div class="settings-metric-label">Successes</div>
                     </div>
-                    <div
-                        style="flex: 1; background: white; padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid var(--accent);">
-                        <div style="font-size: 2rem; font-weight: bold; color: var(--accent);" id="dashboard-accuracy">
-                            0%</div>
-                        <div style="color: #4A4A5A; font-weight: bold;">Accuracy</div>
+                    <div class="settings-metric-card metric-accent">
+                        <div class="settings-metric-value metric-value-accent" id="dashboard-accuracy">0%</div>
+                        <div class="settings-metric-label">Accuracy</div>
+                    </div>
+                    <div class="settings-metric-card metric-tertiary">
+                        <div class="settings-metric-value" id="dashboard-today-attempts">0</div>
+                        <div class="settings-metric-label">Today's Attempts</div>
+                    </div>
+                    <div class="settings-metric-card metric-tertiary">
+                        <div class="settings-metric-value" id="dashboard-top-game">-</div>
+                        <div class="settings-metric-label">Most Practiced Game</div>
                     </div>
                 </div>
             </div>
@@ -169,6 +169,19 @@
                     <small style="color: #666; margin-top: 0.5rem; display: block;">Note: If nothing is selected, the
                         app will use default play words.</small>
                 </div>
+            </div>
+
+            <div class="setting-group">
+                <div class="setting-info">
+                    <h3>Speech Language</h3>
+                    <p>Set recognition language/dialect for better matching.</p>
+                </div>
+                <select id="recognition-lang-select" class="settings-select">
+                    <option value="en-US">English (US)</option>
+                    <option value="en-GB">English (UK)</option>
+                    <option value="en-AU">English (Australia)</option>
+                    <option value="es-ES">Spanish (Spain)</option>
+                </select>
             </div>
 
             <div class="setting-group">

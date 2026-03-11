@@ -1,4 +1,4 @@
-const CACHE_NAME = 'speakup-v1';
+const CACHE_NAME = 'speakup-v2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -19,7 +19,32 @@ const ASSETS_TO_CACHE = [
 
     // New Pages
     './settings.html', './settings.js',
-    './shop.html', './shop.js'
+    './shop.html', './shop.js',
+
+    // Local assets
+    './assets/bee.png',
+    './assets/bunny.png',
+    './assets/snake.png',
+    './assets/lion.png',
+    './assets/kitten.png',
+    './assets/dog.png',
+    './assets/robot_neutral.png',
+    './assets/robot_happy.png',
+    './assets/robot_sad.png',
+    './assets/robot_angry.png',
+    './assets/car_outline.png',
+    './assets/car_red.png',
+    './assets/house_outline.png',
+    './assets/house_blue.png',
+    './assets/tree_outline.png',
+    './assets/tree_green.png'
+];
+
+const RUNTIME_CACHE = 'speakup-runtime-v1';
+const EXTERNAL_ORIGINS = [
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com',
+    'https://cdnjs.cloudflare.com'
 ];
 
 self.addEventListener('install', (event) => {
@@ -50,6 +75,25 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    if (event.request.method !== 'GET') return;
+
+    const requestUrl = new URL(event.request.url);
+    const isExternalAsset = EXTERNAL_ORIGINS.some(origin => requestUrl.origin === origin);
+
+    if (isExternalAsset) {
+        event.respondWith(
+            caches.open(RUNTIME_CACHE).then(async cache => {
+                const cached = await cache.match(event.request);
+                if (cached) return cached;
+
+                const response = await fetch(event.request);
+                cache.put(event.request, response.clone());
+                return response;
+            }).catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
