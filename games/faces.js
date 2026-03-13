@@ -36,6 +36,7 @@ function processSpeech(cleanWords, rawTranscript) {
     heardWordEl.textContent = cleanWords.join(' ');
 
     let matched = false;
+    let detectedEmotion = null;
 
     if (cleanWords.includes('happy') || cleanWords.includes('glad')) {
         detectedEmotion = 'happy';
@@ -61,6 +62,7 @@ function processSpeech(cleanWords, rawTranscript) {
 
     // Determine scoring based on mode
     if (detectedEmotion) {
+        currentEmotion = detectedEmotion;
         if (!promptMode || (promptMode && detectedEmotion === targetPrompt)) {
             matched = true;
         } else if (promptMode && detectedEmotion !== targetPrompt) {
